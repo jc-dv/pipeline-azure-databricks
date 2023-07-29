@@ -18,6 +18,10 @@ dados = spark.read.json(path)
 
 # COMMAND ----------
 
+display(dados)
+
+# COMMAND ----------
+
 dados.show(n=5, truncate=True)
 
 # COMMAND ----------
@@ -27,8 +31,9 @@ dados.show(n=5, truncate=True)
 
 # COMMAND ----------
 
-dados = dados.drop('imagens', 'usuario')
-dados.limit(10).show(truncate=False)
+df_bronze = dados.drop('imagens', 'usuario')
+display(df_bronze)
+# df_bronze.limit(10).show(truncate=False)
 
 # COMMAND ----------
 
@@ -43,7 +48,8 @@ from pyspark.sql.functions import col
 # COMMAND ----------
 
 df_bronze = dados.withColumn('id', col('anuncio.id'))
-df_bronze.limit(10).toPandas()
+display(df_bronze)
+# df_bronze.limit(10).toPandas()
 
 # COMMAND ----------
 
@@ -57,7 +63,7 @@ display(dbutils.fs.ls('/mnt/dados'))
 # COMMAND ----------
 
 path_to_bronze = 'dbfs:/mnt/dados/bronze/dataset_imoveis'
-df_bronze.write.mode('overwrite').format('delta').save(path_to_bronze)
+df_bronze.write.format('delta').mode('overwrite').save(path_to_bronze)
 
 # COMMAND ----------
 

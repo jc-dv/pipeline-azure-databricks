@@ -14,11 +14,12 @@ display(dbutils.fs.ls('/mnt/dados/bronze'))
 # COMMAND ----------
 
 path = 'dbfs:/mnt/dados/bronze/dataset_imoveis/'
-df = spark.read.format('delta').load(path)
+df_silver = spark.read.format('delta').load(path)
+display(df_silver)
 
 # COMMAND ----------
 
-df.limit(5).show(truncate=False)
+df_silver.limit(5).show(truncate=False)
 
 # COMMAND ----------
 
@@ -27,25 +28,39 @@ df.limit(5).show(truncate=False)
 
 # COMMAND ----------
 
-df\
+display(df_silver.select('anuncio.*'))
+
+# COMMAND ----------
+
+df_silver\
     .select('anuncio.*')\
     .toPandas()
 
 # COMMAND ----------
 
-df\
+display(df_silver.select('anuncio.*', 'anuncio.endereco.*'))
+
+# COMMAND ----------
+
+df_silver\
     .select('anuncio.*',
             'anuncio.endereco.*')\
     .toPandas()
 
 # COMMAND ----------
 
-dados_detalhados = df.select('anuncio.*',
-                             'anuncio.endereco.*')
+df_silver = df_silver.select('anuncio.*',
+                                    'anuncio.endereco.*')
+display(df_silver)
 
 # COMMAND ----------
 
-df_silver = dados_detalhados.drop('caracteristicas', 'endereco')
+# MAGIC %md
+# MAGIC #### Removendo colunas
+
+# COMMAND ----------
+
+df_silver = df_silver.drop('caracteristicas', 'endereco')
 df_silver.limit(10).toPandas()
 
 # COMMAND ----------
@@ -60,7 +75,7 @@ display(dbutils.fs.ls('dbfs:/mnt/dados'))
 # COMMAND ----------
 
 path_to_silver = 'dbfs:/mnt/dados/silver/dataset_imoveis'
-df_silver.write.mode('overwrite').format('delta').save(path_to_silver)
+df_silver.write.format('delta').mode('overwrite').save(path_to_silver)
 
 # COMMAND ----------
 
