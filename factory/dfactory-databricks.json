@@ -1,0 +1,9 @@
+{
+	"name": "dfactory-databricks",
+	"location": "eastus2",
+	"identity": {
+		"type": "SystemAssigned",
+		"principalId": "8a57dc20-fda2-4dd9-ba0b-99120c964041",
+		"tenantId": "5dc44bd7-9a48-416f-b9de-0b00720e3808"
+	}
+}
