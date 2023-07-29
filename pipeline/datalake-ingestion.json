@@ -13,11 +13,18 @@
 					"secureOutput": false,
 					"secureInput": false
 				},
-				"userProperties": []
+				"userProperties": [],
+				"typeProperties": {
+					"notebookPath": "/Repos/jcesar_dev_cloud@outlook.com/pipeline-azure-databricks/notebooks/inbound_to_bronze"
+				},
+				"linkedServiceName": {
+					"referenceName": "databricks_datafactory_link",
+					"type": "LinkedServiceReference"
+				}
 			},
 			{
 				"name": "ingestion-silver-layer",
-				"type": "DatabricksSparkPython",
+				"type": "DatabricksNotebook",
 				"dependsOn": [
 					{
 						"activity": "ingestion-bronze-layer",
@@ -33,7 +40,14 @@
 					"secureOutput": false,
 					"secureInput": false
 				},
-				"userProperties": []
+				"userProperties": [],
+				"typeProperties": {
+					"notebookPath": "/Repos/jcesar_dev_cloud@outlook.com/pipeline-azure-databricks/notebooks/bronze_to_silver"
+				},
+				"linkedServiceName": {
+					"referenceName": "databricks_datafactory_link",
+					"type": "LinkedServiceReference"
+				}
 			}
 		],
 		"annotations": []
