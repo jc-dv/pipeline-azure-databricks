@@ -19,7 +19,7 @@ display(df_silver)
 
 # COMMAND ----------
 
-df_silver.limit(5).show(truncate=False)
+# df_silver.limit(5).show(truncate=False)
 
 # COMMAND ----------
 
@@ -32,9 +32,9 @@ display(df_silver.select('anuncio.*'))
 
 # COMMAND ----------
 
-df_silver\
-    .select('anuncio.*')\
-    .toPandas()
+# df_silver\
+#     .select('anuncio.*')\
+#     .toPandas()
 
 # COMMAND ----------
 
@@ -42,15 +42,15 @@ display(df_silver.select('anuncio.*', 'anuncio.endereco.*'))
 
 # COMMAND ----------
 
-df_silver\
-    .select('anuncio.*',
-            'anuncio.endereco.*')\
-    .toPandas()
+# df_silver\
+#     .select('anuncio.*',
+#             'anuncio.endereco.*')\
+#     .toPandas()
 
 # COMMAND ----------
 
 df_silver = df_silver.select('anuncio.*',
-                                    'anuncio.endereco.*')
+                            'anuncio.endereco.*')
 display(df_silver)
 
 # COMMAND ----------
@@ -61,7 +61,8 @@ display(df_silver)
 # COMMAND ----------
 
 df_silver = df_silver.drop('caracteristicas', 'endereco')
-df_silver.limit(10).toPandas()
+display(df_silver)
+# df_silver.limit(10).toPandas()
 
 # COMMAND ----------
 
@@ -76,7 +77,3 @@ display(dbutils.fs.ls('dbfs:/mnt/dados'))
 
 path_to_silver = 'dbfs:/mnt/dados/silver/dataset_imoveis'
 df_silver.write.format('delta').mode('overwrite').save(path_to_silver)
-
-# COMMAND ----------
-
-
